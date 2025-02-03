@@ -1,0 +1,32 @@
+services:
+  api:
+    container_name: boilerplate-api
+    tty: true
+    build:
+      context: .
+      dockerfile: docker/api/Dockerfile
+    ports:
+      - 8080:8080
+    volumes:
+      - ./:/app
+    depends_on:
+      - db
+    env_file: variables.env
+    
+  db:
+    container_name: boilerplate-db
+    build:
+      context: .
+      dockerfile: ./docker/db/Dockerfile
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: db_password
+      MYSQL_DATABASE: db
+    volumes:
+      - db-store:/var/lib/mysql
+      - ./docker/db/conf/my.cnf:/etc/my.cnf
+      - ./docker/db/script:/docker-entrypoint-initdb.d
+
+volumes:
+  db-store:
