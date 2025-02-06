@@ -10,5 +10,5 @@ prune-a:
 it-go:
 	docker exec -it boilerplate-api bash
 
-it-mysql:
-	docker exec -it boilerplate-mysql bash
+it-db:
+	docker exec -it boilerplate-db bash
